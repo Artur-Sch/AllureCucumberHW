@@ -1,8 +1,6 @@
 package insuranceTest.core;
 
 
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,7 +12,7 @@ public class Init {
     private static WebDriver driver;
     private static Properties properties = TestProperties.getInstance().getProperties();
 
-    @Before
+
     public static void setUp(String url) {
         switch (properties.getProperty("browser")) {
             case "firefox":
@@ -34,7 +32,7 @@ public class Init {
         return driver;
     }
 
-    @After
+
     public static void tearDown() {
         driver.close();
         driver.quit();

@@ -1,5 +1,7 @@
 package insuranceTest;
 
+
+import cucumber.api.java.After;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import insuranceTest.core.Init;
@@ -7,6 +9,7 @@ import insuranceTest.core.User;
 import insuranceTest.sberPages.SberMainPage;
 import insuranceTest.sberPages.SberTravelAndShoppingPage;
 import insuranceTest.sberPages.SberTravelInsuracncePage;
+
 
 public class SberScenario {
 
@@ -17,7 +20,7 @@ public class SberScenario {
     User insurantUser = User.getRandomInsurantUserForSber();
 
 
-   static {
+  static  {
         Init.setUp(SberMainPage.SBER_URL);
     }
 
@@ -68,4 +71,8 @@ public class SberScenario {
         sberTravelInsuracncePage.checkMessage(text);
     }
 
+    @After("@sber")
+    public void down() {
+        Init.tearDown();
+    }
 }

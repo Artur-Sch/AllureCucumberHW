@@ -1,6 +1,8 @@
 package insuranceTest;
 
 
+
+import cucumber.api.java.After;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import insuranceTest.core.Init;
@@ -45,7 +47,6 @@ public class RgsScenario {
     @Then("^проверить, что открылась страница , на которой присутствует текст - \"(.+)\"$")
     public void checkTitleSendAppPage(String textTo) {
         dmsPage.checkTextAvailability(textTo);
-
     }
 
     @When("^заполнятся поля формы данными случайного пользователя$")
@@ -64,6 +65,9 @@ public class RgsScenario {
 
     }
 
-
+    @After("@rgs")
+    public void down() {
+        Init.tearDown();
+    }
 
 }
