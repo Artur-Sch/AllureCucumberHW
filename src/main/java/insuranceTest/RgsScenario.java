@@ -35,7 +35,7 @@ public class RgsScenario {
     @Then("^заголовок страницы \"(.+)\" содержит \"(.+)\"$")
     public void checkTitleDMSPage(String title, String textTo) {
         Init.setupPage(title);
-        Init.getCurrentPage().checkTextAvailabilityFromElement(Init.getCurrentPage().getElementByTitle("Title"),textTo);
+        Init.getCurrentPage().checkErrorFromElement(Init.getCurrentPage().getElementByTitle("Title"),textTo);
     }
 
     @When("^нажать на кнопку  - \"(.+)\"$")

@@ -24,20 +24,11 @@ public class BasePage {
         webDriverWait = new WebDriverWait(driver, 5, 200);
     }
 
-    /**
-     * Ожидание доступности елемента
-     * @param element
-     * @return
-     */
     @Step("Wait for ready {element}")
     public WebElement waitForReadyElement(WebElement element) {
         return webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    /**
-     * Ожидание доступности и click через js
-     * @param element
-     */
     @Step("Wait for ready and click for js{element}")
     public void waitForReadyAndClickElmnt(WebElement element) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
@@ -45,23 +36,11 @@ public class BasePage {
         js.executeScript("arguments[0].click();", element);
     }
 
-
-    /**
-     * Скриншотики)
-     * @return
-     */
     @Attachment("Screenshot")
     public byte[] takeScreenshot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
-    /**
-     * Метод по name и and составляет запрос xpath и делает sendKeys текстом textTO
-     *
-     * @param name
-     * @param textTo
-     * @param and
-     */
     @Step("filling in the form {name} with the entered values {textTo}")
     public void fillInputByName(String name, String textTo, String and) {
         String temp = "//*[text() = '%s']/following::input[1]";
@@ -76,42 +55,21 @@ public class BasePage {
         } else checkErrorWithAttribute(element, textTo);
     }
 
-    /**
-     * Проверка атрибута элемента, и тескта
-     * @param element
-     * @param textTo
-     */
-    @Step("Validation of {element} attribute with {textTo}")
+    @Step("Проверка элемента{element} по значению атрибута с {textTo}")
     public void checkErrorWithAttribute(WebElement element, String textTo) {
         waitForReadyElement(element);
         String actualText = element.getAttribute("value");
         Assert.assertEquals(textTo, actualText);
     }
 
-    /**
-     * сравнение текста елемента с актуальным темкстом
-     * @param element
-     * @param textTo
-     */
-    @Step("check request text {textTo} from {element}")
-    public void checkTextAvailabilityFromElement(WebElement element, String textTo) {
-        waitForReadyElement(element);
-        Assert.assertTrue(element.getText().contains(textTo));
-    }
-
-
-    @Step("check request text {textTo} from {element}")
+    @Step("Проверка текста {textTo} у елемента {element}")
     public void checkErrorFromElement(WebElement element, String textTo) {
         waitForReadyElement(element);
         Assert.assertTrue(element.getText().contains(textTo));
         takeScreenshot();
     }
 
-    /**
-     * Перевод драйвера на активную вкладку
-     * @param element
-     */
-    @Step
+    @Step("Перевод драйвера на текущую вкладку")
     public void switchWindowByXpath(WebElement element) {
         Set<String> oldWindowsSet = driver.getWindowHandles();
         waitForReadyAndClickElmnt(element);
