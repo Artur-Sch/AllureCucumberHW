@@ -24,12 +24,12 @@ public class BasePage {
         webDriverWait = new WebDriverWait(driver, 5, 200);
     }
 
-    @Step("Wait for ready {element}")
+    @Step("Ожидание загрузки элемента - {element}")
     public WebElement waitForReadyElement(WebElement element) {
         return webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    @Step("Wait for ready and click for js{element}")
+    @Step("Ожидание загрузки элемента - {element}- и js.click")
     public void waitForReadyAndClickElmnt(WebElement element) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -41,7 +41,7 @@ public class BasePage {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Step("filling in the form {name} with the entered values {textTo}")
+    @Step("Заполнение формы \"{name}\" значением \"{textTo}\"")
     public void fillInputByName(String name, String textTo, String and) {
         String temp = "//*[text() = '%s']/following::input[1]";
         String fullXpath = String.format((temp), name) + and;
@@ -84,7 +84,7 @@ public class BasePage {
         driver.switchTo().window(newWindowHandle);
     }
 
-    @Step("Поиск элемента по аннотации {title}")
+    @Step("Поиск элемента по аннотации - \"{title}\"")
     public WebElement getElementByTitle(String title) {
         Field field = Arrays.stream(this.getClass().getDeclaredFields())
                 .filter(f -> f.getType().equals(WebElement.class))
