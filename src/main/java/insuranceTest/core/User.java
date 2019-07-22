@@ -28,6 +28,7 @@ public class User {
 
     /**
      * Конструктор для пользователя на rgs.ru
+     *
      * @param lastName
      * @param firstName
      * @param patronymic
@@ -44,6 +45,7 @@ public class User {
 
     /**
      * Генерирует рандомного юзера для rgs.ru
+     *
      * @return
      */
     public static User getRandomUserForRgs() {
@@ -56,6 +58,7 @@ public class User {
 
     /**
      * конструктор для застрахованного в сбер
+     *
      * @param lastNameLat
      * @param firstNameLat
      * @param birthDate
@@ -68,6 +71,7 @@ public class User {
 
     /**
      * конструктор страхователя для сбера
+     *
      * @param lastName
      * @param firstName
      * @param patronymic
@@ -92,6 +96,7 @@ public class User {
 
     /**
      * Генерирует рандомного застрахованного
+     *
      * @return
      */
     public static User getRandomInsuredUserForSber() {
@@ -102,17 +107,19 @@ public class User {
 
     /**
      * генерирует рандомного страхователя
+     *
      * @return
      */
     public static User getRandomInsurantUserForSber() {
         random = new Random();
         return new User(lastNames[random.nextInt(4)],
                 firstNames[random.nextInt(4)],
-                patronymics[random.nextInt(4)], getBirthRandomDate(), randomCellsGenerate(4), randomCellsGenerate(6), "ОУФМС МСК",getPassportRandomIssueDate(), true);
+                patronymics[random.nextInt(4)], getBirthRandomDate(), randomCellsGenerate(4), randomCellsGenerate(6), "ОУФМС МСК", getPassportRandomIssueDate(), true);
     }
 
     /**
      * Метод генерации рандомного номера телефона
+     *
      * @param random
      * @return
      */
@@ -136,6 +143,7 @@ public class User {
 
     /**
      * метод генерации рандомного дня рождения
+     *
      * @return
      */
     public static String getBirthRandomDate() {
@@ -152,6 +160,7 @@ public class User {
 
     /**
      * метод генерации рандомной даты выдачи паспорта
+     *
      * @return
      */
     public static String getPassportRandomIssueDate() {
@@ -168,6 +177,7 @@ public class User {
 
     /**
      * метод генерации ранодомных цифр, указанной длинны
+     *
      * @param count
      * @return
      */
@@ -209,40 +219,20 @@ public class User {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getPassportSeries() {
         return passportSeries;
-    }
-
-    public void setPassportSeries(String passportSeries) {
-        this.passportSeries = passportSeries;
     }
 
     public String getPassportNumber() {
         return passportNumber;
     }
 
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
-    }
-
     public String getPassportIssuePlace() {
         return passportIssuePlace;
     }
 
-    public void setPassportIssuePlace(String passportIssuePlace) {
-        this.passportIssuePlace = passportIssuePlace;
-    }
-
     public String getPassportIssueDate() {
         return passportIssueDate;
-    }
-
-    public void setPassportIssueDate(String passportIssueDate) {
-        this.passportIssueDate = passportIssueDate;
     }
 
     public String getLastNameLat() {
@@ -252,4 +242,5 @@ public class User {
     public String getFirstNameLat() {
         return firstNameLat;
     }
+
 }

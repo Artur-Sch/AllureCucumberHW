@@ -1,17 +1,29 @@
 package insuranceTest.core;
 
 
+
+
+import insuranceTest.annotations.PageTitle;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.reflections.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Init {
     private static WebDriver driver;
     private static Properties properties = TestProperties.getInstance().getProperties();
+    private static BasePage currentPage;
+    private static Set<Class<? extends BasePage>> allpages;
 
+    static  {
+        Reflections reflections = new Reflections("insuranceTest");
+        allpages = reflections.getSubTypesOf(BasePage.class);
+    }
 
     public static void setUp(String url) {
         switch (properties.getProperty("browser")) {
@@ -32,6 +44,28 @@ public class Init {
         return driver;
     }
 
+    public static void setupPage(String title) {
+        currentPage = findPageByTitle(title);
+    }
+
+    private static BasePage findPageByTitle(String title) {
+        Class<? extends BasePage> pageClass = allpages.stream()
+                .filter(page -> page.getAnnotation(PageTitle.class) != null)
+                .filter(page -> page.getAnnotation(PageTitle.class).value().equals(title))
+                .findAny().orElseThrow(() -> new RuntimeException("Не найдена страница с названием: " + title));
+        BasePage foundPage = null;
+        try {
+            foundPage = pageClass.getConstructor().newInstance();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foundPage;
+    }
+
+    public static BasePage getCurrentPage() {
+        return currentPage;
+    }
 
     public static void tearDown() {
         driver.close();

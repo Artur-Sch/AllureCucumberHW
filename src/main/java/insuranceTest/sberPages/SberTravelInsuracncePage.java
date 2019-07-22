@@ -1,25 +1,23 @@
 package insuranceTest.sberPages;
 
+import insuranceTest.annotations.ElementTitle;
+import insuranceTest.annotations.PageTitle;
 import insuranceTest.core.BasePage;
-import insuranceTest.core.Init;
 import insuranceTest.core.User;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+@PageTitle("Сбербанк страхование")
 public class SberTravelInsuracncePage extends BasePage {
 
-    @FindBy(xpath = "//*[contains(text(),'Минимальная')]")
-    WebElement minimalButton;
 
+    @ElementTitle("Оформить")
     @FindBy(xpath = "//*[@ng-click='save()']")
     WebElement buttonNextForm;
 
-    @FindBy(xpath = "//*[@ng-click='save()']")
-    WebElement saveButton;
-
+    @ElementTitle("Error")
     @FindBy(xpath = "//div[contains(text(), 'Заполнены')]")
     WebElement errorElement;
 
@@ -44,23 +42,9 @@ public class SberTravelInsuracncePage extends BasePage {
     @FindBy(xpath = "//*[@name='issuePlace']")
     WebElement issuePlace;
 
-//    @Step("choice of minimum insurance")
-//    public void setMinimalClickAndNext() {
-//        waitForReadyElement(minimalButton).click();
-//        waitForReadyElement(buttonNextForm).click();
-//    }
-
-    @Step("choice of minimum insurance")
-    public void setMinimalClick(String name) {
-        String xpath = "//*[contains(text(),'"+name+"')]";
-        WebElement minimalButton = Init.getDriver().findElement(By.xpath(xpath));
-        waitForReadyElement(buttonNextForm).click();
-    }
-
-    @Step("choice of minimum insurance")
-    public void clickNext() {
-        waitForReadyElement(buttonNextForm).click();
-    }
+    @ElementTitle("Минимальная")
+    @FindBy(xpath = "//*[contains(text(),'Минимальная')]")
+    WebElement minimalButton;
 
     @Step("fill in the insured data")
     public void fillInTheFormInsuredUser(User user) {
@@ -78,11 +62,9 @@ public class SberTravelInsuracncePage extends BasePage {
         if (user.getSex().contains("м")) {
             waitForReadyElement(manSex).click();
         } else waitForReadyElement(womanSex).click();
-
         fillInputByName("Серия и номер паспорта", user.getPassportSeries(), "[@name='passport_series']");
         waitForReadyElement(passportNumber).sendKeys(user.getPassportNumber());
         checkErrorWithAttribute(passportNumber, user.getPassportNumber());
-
         waitForReadyElement(issuePlace).sendKeys(user.getPassportIssuePlace());
         checkErrorWithAttribute(issuePlace, user.getPassportIssuePlace());
         waitForReadyElement(issueDate).sendKeys(user.getPassportIssueDate()+ Keys.TAB);
@@ -90,18 +72,5 @@ public class SberTravelInsuracncePage extends BasePage {
         checkErrorWithAttribute(issueDate, user.getPassportIssueDate());
         checkErrorWithAttribute(birthDate, user.getBirthDate());
     }
-
-    @Step("Submit Form")
-    public void sendForm() {
-        waitForReadyElement(saveButton).click();
-    }
-
-    @Step("check error")
-    public void checkMessage(String text) {
-        checkTextAvailabilityFromElement(errorElement, text);
-        takeScreenshot();
-    }
-
-
 
 }

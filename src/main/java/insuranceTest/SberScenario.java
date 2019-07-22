@@ -25,34 +25,35 @@ public class SberScenario {
     }
 
     @When("Нажать на - \"(.+)\"$")
-    public void clickInsured(String name) {
-        sberMainPage.clickinsuranceButton(name);
+    public void clickInsured(String title) {
+        sberMainPage.getElementByTitle(title).click();
     }
 
     @When("Выбрать – \"(.+)\"$")
-    public void clickTravelAndShopping(String name) {
-        sberMainPage.clickTravelAndShopping(name);
+    public void clickTravelAndShopping(String title) {
+        sberMainPage.getElementByTitle(title).click();
     }
 
-    @Then("Проверить наличие на странице заголовка – \"(.+)\"$")
-    public void checkTitle(String text) {
-        sberTravelAndShoppingPage.checkTitle(text);
+    @Then("Проверить на странице \"(.+)\" \"(.+)\" – \"(.+)\"$")
+    public void checkTitle(String title, String element ,String textTo) {
+        Init.setupPage(title);
+        Init.getCurrentPage().checkErrorFromElement(Init.getCurrentPage().getElementByTitle(element),textTo);
     }
 
     @When("Нажать на – \"(.+)\"$")
-    public void clickOpenForm(String name) {
-        sberTravelAndShoppingPage.openFormInsurance(name);
+    public void clickOpenForm(String title) {
+        sberTravelAndShoppingPage.switchWindowByXpath(sberTravelAndShoppingPage.getElementByTitle(title));
     }
 
 
     @Then("На вкладке – Выбор полиса  выбрать сумму страховой защиты – \"(.+)\"$")
-    public void clickMinimal(String name) {
-        sberTravelInsuracncePage.setMinimalClick(name);
+    public void clickMinimal(String title) {
+        sberTravelInsuracncePage.getElementByTitle(title).click();
     }
 
-    @When("Нажать Оформить")
-    public void clickNext() {
-        sberTravelInsuracncePage.clickNext();
+    @When("Нажать кнопку - \"(.+)\"$")
+    public void clickNext(String title) {
+      sberTravelInsuracncePage.getElementByTitle(title).click();
     }
 
     @Then("На вкладке Оформить заполнить поля пользователя")
@@ -61,14 +62,14 @@ public class SberScenario {
         sberTravelInsuracncePage.fillInTheFormInsurantUser(insurantUser);
     }
 
-    @When("Проверить, что все поля заполнены правильно, нажать продолжить")
-    public void clickSave() {
-        sberTravelInsuracncePage.sendForm();
+    @When("Проверить, что все поля заполнены правильно, нажать - \"(.+)\"$")
+    public void clickSave(String title) {
+      sberTravelInsuracncePage.getElementByTitle(title).click();
     }
 
     @Then("Проверить, что появилось сообщение - \"(.+)\"$")
     public void checkError(String text) {
-        sberTravelInsuracncePage.checkMessage(text);
+        sberTravelInsuracncePage.checkErrorFromElement(sberTravelInsuracncePage.getElementByTitle("Error"), text);
     }
 
     @After("@sber")

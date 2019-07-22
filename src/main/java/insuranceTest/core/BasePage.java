@@ -1,5 +1,6 @@
 package insuranceTest.core;
 
+import insuranceTest.annotations.ElementTitle;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.junit.Assert;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Set;
 
 public class BasePage {
@@ -97,6 +100,13 @@ public class BasePage {
     }
 
 
+    @Step("check request text {textTo} from {element}")
+    public void checkErrorFromElement(WebElement element, String textTo) {
+        waitForReadyElement(element);
+        Assert.assertTrue(element.getText().contains(textTo));
+        takeScreenshot();
+    }
+
     /**
      * Перевод драйвера на активную вкладку
      * @param element
@@ -114,5 +124,23 @@ public class BasePage {
                         }
                 );
         driver.switchTo().window(newWindowHandle);
+    }
+
+    @Step("Поиск элемента по аннотации {title}")
+    public WebElement getElementByTitle(String title) {
+        Field field = Arrays.stream(this.getClass().getDeclaredFields())
+                .filter(f -> f.getType().equals(WebElement.class))
+                .filter(f -> f.getAnnotation(ElementTitle.class) != null)
+                .filter(f -> f.getAnnotation(ElementTitle.class).value().equalsIgnoreCase(title))
+                .findFirst().orElseThrow(()->new RuntimeException("Не найден элемент с названием "+ title));
+        Assert.assertEquals(field.getType(), WebElement.class);
+        field.setAccessible(true);
+        WebElement element= null;
+        try {
+            element = (WebElement) field.get(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return waitForReadyElement(element);
     }
 }
