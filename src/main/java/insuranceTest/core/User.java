@@ -17,6 +17,7 @@ public class User {
     private String passportIssueDate;
     private String email;
     private boolean sex;
+    private String id;
 
     private static String[] lastNames = {"Иванов", "Петров", "Сидоров", "Пупкин"};
     private static String[] lastNamesLat = {"Ivanov", "Petrov", "Sidorov", "Pupkin"};
@@ -26,15 +27,6 @@ public class User {
     private static String numbers = "0123456789";
     private static Random random;
 
-    /**
-     * Конструктор для пользователя на rgs.ru
-     *
-     * @param lastName
-     * @param firstName
-     * @param patronymic
-     * @param telephoneNumber
-     * @param email
-     */
     public User(String lastName, String firstName, String patronymic, String telephoneNumber, String email) {
         this.lastName = lastName;
         this.firstName = firstName;
@@ -43,11 +35,6 @@ public class User {
         this.email = email;
     }
 
-    /**
-     * Генерирует рандомного юзера для rgs.ru
-     *
-     * @return
-     */
     public static User getRandomUserForRgs() {
         random = new Random();
         return new User(lastNames[random.nextInt(4)],
@@ -56,32 +43,12 @@ public class User {
                 getRandomTelephoneNumber(random), "qwertyqwerty");
     }
 
-    /**
-     * конструктор для застрахованного в сбер
-     *
-     * @param lastNameLat
-     * @param firstNameLat
-     * @param birthDate
-     */
     public User(String lastNameLat, String firstNameLat, String birthDate) {
         this.lastNameLat = lastNameLat;
         this.firstNameLat = firstNameLat;
         this.birthDate = birthDate;
     }
 
-    /**
-     * конструктор страхователя для сбера
-     *
-     * @param lastName
-     * @param firstName
-     * @param patronymic
-     * @param birthDate
-     * @param passportSeries
-     * @param passportNumber
-     * @param passportIssuePlace
-     * @param passportIssueDate
-     * @param sex
-     */
     public User(String lastName, String firstName, String patronymic, String birthDate, String passportSeries, String passportNumber, String passportIssuePlace, String passportIssueDate, boolean sex) {
         this.lastName = lastName;
         this.firstName = firstName;
@@ -94,22 +61,12 @@ public class User {
         this.sex = sex;
     }
 
-    /**
-     * Генерирует рандомного застрахованного
-     *
-     * @return
-     */
     public static User getRandomInsuredUserForSber() {
         random = new Random();
         return new User(lastNamesLat[random.nextInt(4)],
                 firstNamesLat[random.nextInt(4)], getBirthRandomDate());
     }
 
-    /**
-     * генерирует рандомного страхователя
-     *
-     * @return
-     */
     public static User getRandomInsurantUserForSber() {
         random = new Random();
         return new User(lastNames[random.nextInt(4)],
@@ -117,12 +74,6 @@ public class User {
                 patronymics[random.nextInt(4)], getBirthRandomDate(), randomCellsGenerate(4), randomCellsGenerate(6), "ОУФМС МСК", getPassportRandomIssueDate(), true);
     }
 
-    /**
-     * Метод генерации рандомного номера телефона
-     *
-     * @param random
-     * @return
-     */
     public static String getRandomTelephoneNumber(Random random) {
         StringBuilder telephoneNumberBuilder = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -141,11 +92,6 @@ public class User {
         return telephoneNumberBuilder.toString();
     }
 
-    /**
-     * метод генерации рандомного дня рождения
-     *
-     * @return
-     */
     public static String getBirthRandomDate() {
         String date = "";
         int yearBegin = 1960;
@@ -158,11 +104,6 @@ public class User {
         return date;
     }
 
-    /**
-     * метод генерации рандомной даты выдачи паспорта
-     *
-     * @return
-     */
     public static String getPassportRandomIssueDate() {
         String date = "";
         int yearBegin = 2010;
@@ -175,12 +116,6 @@ public class User {
         return date;
     }
 
-    /**
-     * метод генерации ранодомных цифр, указанной длинны
-     *
-     * @param count
-     * @return
-     */
     public static String randomCellsGenerate(int count) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < count; i++) {
@@ -242,5 +177,15 @@ public class User {
     public String getFirstNameLat() {
         return firstNameLat;
     }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
 }

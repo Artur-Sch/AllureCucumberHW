@@ -5,7 +5,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import insuranceTest.core.Init;
-import insuranceTest.core.User;
+import insuranceTest.core.UserFactory;
 import insuranceTest.sberPages.SberMainPage;
 import insuranceTest.sberPages.SberTravelAndShoppingPage;
 import insuranceTest.sberPages.SberTravelInsuracncePage;
@@ -16,8 +16,8 @@ public class SberScenario {
     SberMainPage sberMainPage = new SberMainPage();
     SberTravelAndShoppingPage sberTravelAndShoppingPage = new SberTravelAndShoppingPage();
     SberTravelInsuracncePage sberTravelInsuracncePage = new SberTravelInsuracncePage();
-    User insuredUser = User.getRandomInsuredUserForSber();
-    User insurantUser = User.getRandomInsurantUserForSber();
+
+
 
 
   static  {
@@ -56,10 +56,19 @@ public class SberScenario {
       sberTravelInsuracncePage.getElementByTitle(title).click();
     }
 
-    @Then("На вкладке Оформить заполнить поля пользователя")
-    public void fillForm() {
-        sberTravelInsuracncePage.fillInTheFormInsuredUser(insuredUser);
-        sberTravelInsuracncePage.fillInTheFormInsurantUser(insurantUser);
+    @When("^Создать и сохранить пользователя \"(.+)\" с случайными данными$")
+    public void createInsuredUser(String id) {
+        UserFactory.getInstance().createUserSberInsured(id);
+    }
+
+    @When("^Создать пользоватля \"(.+)\" с случайными данными и сохранить$")
+    public void createInsurantUser(String id) {
+        UserFactory.getInstance().createUserSberInsurant(id);
+    }
+    @Then("На вкладке Оформить заполнить поля пользователя \"(.+)\" и \"(.+)\"$")
+    public void fillForm(String firstId, String secondId) {
+        sberTravelInsuracncePage.fillInTheFormInsuredUser(UserFactory.getInstance().getUser(firstId));
+        sberTravelInsuracncePage.fillInTheFormInsurantUser(UserFactory.getInstance().getUser(secondId));
     }
 
     @When("Проверить, что все поля заполнены правильно, нажать - \"(.+)\"$")

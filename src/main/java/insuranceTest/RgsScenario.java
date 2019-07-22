@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import insuranceTest.core.Init;
 import insuranceTest.core.User;
+import insuranceTest.core.UserFactory;
 import insuranceTest.rgsPages.RgsDmsPage;
 import insuranceTest.rgsPages.RgsMainPage;
 
@@ -16,7 +17,7 @@ public class RgsScenario {
 
     RgsMainPage rgsMainPage = new RgsMainPage();
     RgsDmsPage dmsPage = new RgsDmsPage();
-    User saveUser = User.getRandomUserForRgs();
+
 
    static  {
         Init.setUp(RgsMainPage.RGS_URL);
@@ -48,9 +49,14 @@ public class RgsScenario {
         dmsPage.checkErrorFromElement(dmsPage.getElementByTitle("textRequest"), textTo);
     }
 
-    @When("^заполнить поля формы данными сгенерированного случайного пользователя")
-    public void fillForm() {
-        dmsPage.fillInTheForm(saveUser);
+    @When("^создать пользователя \"(.+)\" с случайными данными$")
+    public void createUser(String id) {
+       UserFactory.getInstance().createUserRgs(id);
+    }
+
+    @When("^заполнить поля формы данными сгенерированного \"(.+)\" пользователя")
+    public void fillForm(String id) {
+        dmsPage.fillInTheForm( UserFactory.getInstance().getUser(id));
     }
 
     @Then("^проверить значения полей и значений пользователя, нажать кнопку \"(.+)\"$")
