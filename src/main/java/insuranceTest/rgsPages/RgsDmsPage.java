@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 @PageTitle("ДМС страхование")
 public class RgsDmsPage extends BasePage {
 
-    @ElementTitle("Title")
+    @ElementTitle("заголовок")
     @FindBy(xpath = "//*[contains(text(), 'добровольное медицинское страхование')]")
     private WebElement dmcTitle;
 

@@ -32,10 +32,10 @@ public class RgsScenario {
         rgsMainPage.getElementByTitle(fieldTitle).click();
     }
 
-    @Then("^заголовок страницы \"(.+)\" содержит \"(.+)\"$")
-    public void checkTitleDMSPage(String title, String textTo) {
+    @Then("^\"(.+)\" страницы \"(.+)\" содержит \"(.+)\"$")
+    public void checkTitleDMSPage(String element, String title, String textTo) {
         Init.setupPage(title);
-        Init.getCurrentPage().checkErrorFromElement(Init.getCurrentPage().getElementByTitle("Title"),textTo);
+        Init.getCurrentPage().checkErrorFromElement(Init.getCurrentPage().getElementByTitle(element),textTo);
     }
 
     @When("^нажать на кнопку  - \"(.+)\"$")
